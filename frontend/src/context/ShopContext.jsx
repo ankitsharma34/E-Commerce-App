@@ -9,7 +9,8 @@ const ShopContextProvider = (props) => {
   const delivery_fee = 10;
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(true);
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState({});
+
   const addToCart = (itemId, size) => {
     if (!size) {
       toast.error("Select Product Size");
@@ -29,6 +30,22 @@ const ShopContextProvider = (props) => {
     setCartItems(cartData);
   };
 
+  const getCartCount = () => {
+    let total = 0;
+    for (const items in cartItems) {
+      for (const item in cartItems[items]) {
+        try {
+          if (cartItems[items][item] > 0) {
+            total += cartItems[items][item];
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }
+    return total;
+  };
+
   const value = {
     products,
     currency,
@@ -39,7 +56,9 @@ const ShopContextProvider = (props) => {
     setShowSearch,
     cartItems,
     addToCart,
+    getCartCount,
   };
+
   return (
     <ShopContext.Provider value={value}>{props.children}</ShopContext.Provider>
   );
