@@ -3,7 +3,7 @@ import { ShopContext } from "../context/ShopContext";
 import { assets } from "../assets/assets";
 
 const CartItemComp = ({ productData, item }) => {
-  const { currency } = useContext(ShopContext);
+  const { currency, updateQuantity } = useContext(ShopContext);
   return (
     <div className="py-4 border-t text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4">
       <div className="flex flex-start gap-6">
@@ -26,12 +26,18 @@ const CartItemComp = ({ productData, item }) => {
         </div>
       </div>
       <input
+        onChange={(e) =>
+          e.target.value === "" || e.target.value === "0"
+            ? null
+            : updateQuantity(item._id, item.size, Number(e.target.value))
+        }
         className="border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1"
         type="number"
         min={1}
         defaultValue={item.quantity}
       />
       <img
+        onClick={() => updateQuantity(item._id, item.size, 0)}
         className="w-4 mr-4 sm:w-5 cursor-pointer"
         src={assets.bin_icon}
         alt=""
