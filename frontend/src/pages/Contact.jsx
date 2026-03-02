@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Title from "../components/Title";
 import { assets } from "../assets/assets";
+import NewsletterBox from "../components/NewsletterBox";
 
 const Contact = () => {
   const [name, setName] = useState("");
@@ -93,6 +94,8 @@ const Contact = () => {
           SUBMIT
         </button>
       </form>
+
+      <NewsletterBox />
     </div>
   );
 };
