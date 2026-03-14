@@ -1,11 +1,13 @@
 import express from "express";
 import cors from "cors";
 import connectDB from "./config/mongodb";
+import connectCloudinary from "./config/cloudinary";
 
 // app config
 const app = express();
 const PORT = process.env.PORT || 3000;
 connectDB();
+connectCloudinary();
 
 // middlewares
 app.use(express.json());
