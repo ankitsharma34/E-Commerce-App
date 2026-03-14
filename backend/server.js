@@ -1,9 +1,11 @@
 import express from "express";
 import cors from "cors";
+import connectDB from "./config/mongodb";
 
 // app config
 const app = express();
 const PORT = process.env.PORT || 3000;
+connectDB();
 
 // middlewares
 app.use(express.json());
