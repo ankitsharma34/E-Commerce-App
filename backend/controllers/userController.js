@@ -79,11 +79,28 @@ const registerUser = async (req, res) => {
     return res.json({ success: true, token });
   } catch (error) {
     console.error(error);
-    return res.json({ success: false, message: "Unexpected error occurred!" });
+    return res.json({ success: false, message: error.message });
   }
 };
 
 // Route for adminLogin
-const adminLogin = async (req, res) => {};
+const adminLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (
+      email === process.env.ADMIN_ID &&
+      password === process.env.ADMIN_PASSWORD
+    ) {
+      const token = jwt.sign(email + password, process.env.JWT_SECRET);
+      return res.json({ success: true, token });
+    } else {
+      return res.json({ success: false, message: "Incorrect id or password." });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.json({ success: false, message: error.message });
+  }
+};
 
 export { loginUser, registerUser, adminLogin };
