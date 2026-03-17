@@ -9,7 +9,7 @@ const CartItemComp = ({ productData, item }) => {
       <div className="flex flex-start gap-6">
         <img
           className="w-16 sm:w-20"
-          src={productData.image[0]}
+          src={productData.images[0]}
           alt={productData.name}
         />
         <div>
