@@ -13,7 +13,7 @@ const adminAuth = async (req, res, next) => {
     if (decoded_token !== process.env.ADMIN_ID + process.env.ADMIN_PASSWORD) {
       return res.json({
         success: false,
-        message: "Not Authorized. Login Again.",
+        message: "Incorrect admin credential.",
       });
     }
     next();

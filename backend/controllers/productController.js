@@ -16,7 +16,7 @@ const addProduct = async (req, res) => {
     const image1 = req.files.image1 && req.files.image1[0]; // if image1 exists, read it
     const image2 = req.files.image2 && req.files.image2[0]; // if image2 exists, read it
     const image3 = req.files.image3 && req.files.image3[0]; // if image3 exists, read it
-    const image4 = req.files.image3 && req.files.image4[0]; // if image4 exists, read it
+    const image4 = req.files.image4 && req.files.image4[0]; // if image4 exists, read it
 
     const images = [image1, image2, image3, image4].filter(
       (item) => item !== undefined,
@@ -46,7 +46,10 @@ const addProduct = async (req, res) => {
     const product = new productModel(productData);
     await product.save();
 
-    return res.json({ success: true, message: "product Data Added" });
+    return res.json({
+      success: true,
+      message: "Product Data added successfully",
+    });
   } catch (error) {
     console.error(error);
     return res.json({ success: false, error });
