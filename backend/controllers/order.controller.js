@@ -59,7 +59,30 @@ const userOrders = async (req, res) => {
 };
 
 // update order status by admin
-const updateStatus = async (req, res) => {};
+const updateStatus = async (req, res) => {
+  try {
+    const { orderId, status } = req.body;
+
+    if (!orderId || !status) {
+      return res.json({ success: false, message: "Missing required fields" });
+    }
+
+    const order = await orderModel.findByIdAndUpdate(
+      orderId,
+      { status },
+      { new: true },
+    );
+
+    if (!order) {
+      return res.json({ success: false, message: "Order not found" });
+    }
+
+    return res.json({ success: true, message: "Status updated" });
+  } catch (error) {
+    console.error(error);
+    return res.json({ success: false, message: error.message });
+  }
+};
 
 export {
   placeOrder,
