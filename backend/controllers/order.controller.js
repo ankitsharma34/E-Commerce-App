@@ -102,6 +102,28 @@ const placeOrderStripe = async (req, res) => {
   }
 };
 
+// verification of payment using stripe
+const verifyStripe = async (req, res) => {
+  try {
+    const { orderId, success, userId } = req.body;
+
+    if (success === "true") {
+      // Payment successful — update order
+      await orderModel.findByIdAndUpdate(orderId, { payment: true });
+      // Clear user's cart
+      await userModel.findByIdAndUpdate(userId, { cartData: {} });
+      return res.json({ success: true, message: "Payment successful" });
+    } else {
+      // Payment cancelled/failed — delete the order
+      await orderModel.findByIdAndDelete(orderId);
+      return res.json({ success: false, message: "Payment cancelled" });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.json({ success: false, message: error.message });
+  }
+};
+
 // placing order using Razorpay method
 const placeOrderRazorpay = async (req, res) => {};
 
@@ -162,4 +184,5 @@ export {
   allOrders,
   userOrders,
   updateStatus,
+  verifyStripe,
 };

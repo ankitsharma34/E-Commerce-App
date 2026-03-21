@@ -7,6 +7,7 @@ import {
   placeOrderStripe,
   updateStatus,
   userOrders,
+  verifyStripe,
 } from "../controllers/order.controller.js";
 import authUser from "../middlewares/authUser.js";
 
@@ -20,6 +21,9 @@ orderRouter.post("/status", adminAuth, updateStatus);
 orderRouter.post("/place", authUser, placeOrder);
 orderRouter.post("/stripe", authUser, placeOrderStripe);
 orderRouter.post("/razorpay", authUser, placeOrderRazorpay);
+
+// Verify route
+orderRouter.post("/verify-stripe", authUser, verifyStripe);
 
 // user feature
 orderRouter.post("/user-orders", authUser, userOrders);
